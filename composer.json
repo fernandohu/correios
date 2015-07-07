@@ -1,6 +1,6 @@
 {
   "name": "dafiti/correios",
-  "description": "PHP integration with Correios API",
+  "description": "PHP integration with Correios Webservice",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -9,8 +9,8 @@
   ],
   "authors": [
     {
-      "name": "Fabio da Silva Ribeiro",
-      "email": "silva.ribeiro@dafiti.com.br"
+      "name": "Flávio Avad Briz",
+      "email": "flavio.briz@dafiti.com.br"
     }
   ],
   "minimum-stability": "dev",
