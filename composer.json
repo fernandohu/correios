@@ -1,0 +1,34 @@
+{
+  "name": "dafiti/correios",
+  "description": "PHP integration with Correios API",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "dafiti",
+    "correios"
+  ],
+  "authors": [
+    {
+      "name": "Fabio da Silva Ribeiro",
+      "email": "silva.ribeiro@dafiti.com.br"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "@stable",
+    "fabpot/php-cs-fixer": "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dafiti\\Correios\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Dafiti\\Correios\\": "tests/"
+    }
+  }
+}
