@@ -2,6 +2,8 @@
 
 namespace Dafiti\Correios\Entity;
 
+use Dafiti\Correios\Exception;
+
 /**
  * @package Dafiti\Correios\Entity
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
@@ -9,19 +11,33 @@ namespace Dafiti\Correios\Entity;
  */
 class Config
 {
+    private $wsdl;
     private $usuario;
     private $senha;
     private $codAdministrativo;
     private $contrato;
 
-    public function __contruct(array $data)
+    public function __construct(array $data)
     {
-        if ($this->isValid($data)) {
-            $this->setUsuario($data['usuario']);
-            $this->setSenha($data['senha']);
-            $this->setCodAdministrativo($data['codAdministrativo']);
-            $this->setContrato($data['contrato']);
-        }
+        $this->setWsdl(isset($data['wsdl']) ? $data['wsdl'] : null);
+        $this->setUsuario(isset($data['usuario']) ? $data['usuario'] : null);
+        $this->setSenha(isset($data['senha']) ? $data['senha'] : null);
+        $this->setCodAdministrativo(
+            isset($data['codAdministrativo']) ? $data['codAdministrativo'] : null
+        );
+        $this->setContrato(isset($data['contrato']) ? $data['contrato'] : null);
+
+        $this->isValid();
+    }
+
+    public function setWsdl($wsdl)
+    {
+        $this->wsdl = $wsdl;
+    }
+
+    public function getWsdl()
+    {
+        return $this->wsdl;
     }
 
     public function setUsuario($usuario)
@@ -64,25 +80,38 @@ class Config
         return $this->contrato;
     }
 
+    /**
+     * @param array $data
+     * @return boolean
+     */
     public function isValid()
     {
+        $invalid = [];
+
+        if (empty($this->getWsdl()) && APP_ENV == 'prod') {
+            $invalid[] = 'wsdl';
+        }
+
+        if (empty($this->getUsuario())) {
+            $invalid[] = 'usuario';
+        }
+
+        if (empty($this->getSenha())) {
+            $invalid[] = 'senha';
+        }
+
+        if (empty($this->getCodAdministrativo())) {
+            $invalid[] = 'codAdministrativo';
+        }
+
+        if (empty($this->getContrato())) {
+            $invalid[] = 'contrato';
+        }
+
+        if (count($invalid)) {
+            throw new Exception\InvalidConfiguration($invalid);
+        }
+
         return true;
-    }
-
-    /**
-     * Load config for integration tests
-     *
-     * @access public
-     * @return void
-     */
-    public function loadConfig()
-    {
-        $ini = parse_ini_file(ROOT . "/configs/config.ini");
-        $data = $ini[APP_ENV]['sigep'];
-
-        $this->setUsuario($data['usuario']);
-        $this->setSenha($data['senha']);
-        $this->setCodAdministrativo($data['codAdministrativo']);
-        $this->setContrato($data['contrato']);
     }
 }
