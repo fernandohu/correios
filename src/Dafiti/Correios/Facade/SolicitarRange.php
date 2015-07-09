@@ -17,17 +17,11 @@ use Dafiti\Correios\Entity;
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  *'@license MIT
  */
-class SolicitarRange implements FacadeInterface
+class SolicitarRange extends FacadeInterface
 {
-    private $reqObj;
-
     public function call()
     {
-        return ;
-    }
 
-    public function setRequestObject(Entity\RequestObject $obj)
-    {
         return ;
     }
 }

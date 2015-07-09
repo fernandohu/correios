@@ -3,8 +3,26 @@
 namespace Dafiti\Correios\Facade;
 
 use Dafiti\Correios\Entity;
+use Dafiti\Correios\Adapter;
 
-interface FacadeInterface
+abstract class FacadeInterface
 {
-    public function call();
+    protected $adapter;
+    protected $response;
+
+    /**
+     * @access public
+     * @return \Dafiti\Correios\Entity\ResponseObject
+     */
+    abstract public function call();
+
+    public function setAdapter(Adapter\SoapAdapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
+
+    public function setRequest(Entity\RequestObject $request)
+    {
+        $this->request = $request;
+    }
 }

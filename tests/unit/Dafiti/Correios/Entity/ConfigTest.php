@@ -5,10 +5,11 @@ namespace Dafiti\Correios\Entity;
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
     private $config;
+    private $data;
 
     public function setUp()
     {
-        $data = [
+        $this->data = [
             'wsdl' => 'http://test',
             'usuario' => 'teste',
             'senha' => '123',
@@ -16,12 +17,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'contrato' => '123'
         ];
 
-        $this->config = new Config($data);
+        $this->config = new Config($this->data);
     }
 
     public function testIsValid()
     {
-        $this->assertTrue($this->config->isValid());
+        $this->assertTrue($this->config->isValid($this->data));
     }
 
     public function testGetProperties()

@@ -18,8 +18,19 @@ class SoapAdapter extends \SoapClient
 
     public function __construct(Entity\Config $config)
     {
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ]);
+
         $this->setConfig($config);
-        parent::__construct($this->getConfig()->getWsdl());
+        parent::__construct(
+            $this->getConfig()->getWsdl(),
+            ['stream_context' => $context]
+        );
     }
 
     public function getConfig()
@@ -32,8 +43,19 @@ class SoapAdapter extends \SoapClient
         $this->config = $config;
     }
 
-    public function call()
+
+    public function call($method, Entity\RequestObject $obj)
     {
-        return true;
+        try{
+            $response = $this->$method($obj->getArrayCopy());
+            return new Entity\ResponseObject($response);
+        } catch (\SoapFault $fault) {
+            throw new \SoapFault(
+                "SOAP Fault: (faultcode: {$fault->faultcode},".
+                " faultstring: {$fault->faultstring})",
+                E_USER_ERROR
+            );
+
+        }
     }
 }

@@ -9,7 +9,9 @@ if (!file_exists($autoload = ROOT . 'vendor/autoload.php')) {
     throw new RuntimeException('Dependencies are not installed!');
 }
 
-define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') : 'prod'));
+if (!defined('APP_ENV')) {
+    define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') : 'prod'));
+}
 
 require $autoload;
 

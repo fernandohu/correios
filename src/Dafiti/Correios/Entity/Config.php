@@ -9,7 +9,7 @@ use Dafiti\Correios\Exception;
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */
-class Config
+class Config extends \ArrayObject
 {
     private $wsdl;
     private $usuario;
@@ -19,15 +19,14 @@ class Config
 
     public function __construct(array $data)
     {
-        $this->setWsdl(isset($data['wsdl']) ? $data['wsdl'] : null);
-        $this->setUsuario(isset($data['usuario']) ? $data['usuario'] : null);
-        $this->setSenha(isset($data['senha']) ? $data['senha'] : null);
-        $this->setCodAdministrativo(
-            isset($data['codAdministrativo']) ? $data['codAdministrativo'] : null
-        );
-        $this->setContrato(isset($data['contrato']) ? $data['contrato'] : null);
+        if ($this->isValid($data)) {
+            $this->setWsdl($data['wsdl']);
+            $this->setUsuario($data['usuario']);
+            $this->setSenha($data['senha']);
+            $this->setCodAdministrativo($data['codAdministrativo']);
+            $this->setContrato($data['contrato']);
+        }
 
-        $this->isValid();
     }
 
     public function setWsdl($wsdl)
@@ -84,27 +83,27 @@ class Config
      * @param array $data
      * @return boolean
      */
-    public function isValid()
+    public function isValid($data)
     {
         $invalid = [];
 
-        if (empty($this->getWsdl()) && APP_ENV == 'prod') {
+        if (empty($data['wsdl'])) {
             $invalid[] = 'wsdl';
         }
 
-        if (empty($this->getUsuario())) {
+        if (empty($data['usuario'])) {
             $invalid[] = 'usuario';
         }
 
-        if (empty($this->getSenha())) {
+        if (empty($data['senha'])) {
             $invalid[] = 'senha';
         }
 
-        if (empty($this->getCodAdministrativo())) {
+        if (empty($data['codAdministrativo'])) {
             $invalid[] = 'codAdministrativo';
         }
 
-        if (empty($this->getContrato())) {
+        if (empty($data['contrato'])) {
             $invalid[] = 'contrato';
         }
 
