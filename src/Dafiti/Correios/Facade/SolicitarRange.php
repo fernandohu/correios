@@ -2,8 +2,6 @@
 
 namespace Dafiti\Correios\Facade;
 
-use Dafiti\Correios\Entity;
-
 /**
  * Este método retorna uma faixa de numeração de autorização de postagem (e-
  * ticket) a ser gerenciada no sistema proprietário para o serviço de logística
@@ -13,7 +11,7 @@ use Dafiti\Correios\Entity;
  * Recomendado utilizar este método apenas de forma contigencial.
  *
  * @uses FacadeInterface
- * @package Dafiti\Correios\Facade
+ *
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  *'@license MIT
  */
@@ -21,7 +19,6 @@ class SolicitarRange extends FacadeInterface
 {
     public function call()
     {
-
-        return ;
+        return;
     }
 }

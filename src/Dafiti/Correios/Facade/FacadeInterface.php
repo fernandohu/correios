@@ -11,7 +11,6 @@ abstract class FacadeInterface
     protected $response;
 
     /**
-     * @access public
      * @return \Dafiti\Correios\Entity\ResponseObject
      */
     abstract public function call();

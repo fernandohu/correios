@@ -8,13 +8,10 @@ class ResponseObject extends \ArrayObject
 {
     /**
      * Verifies error code and throws an exception in case
-     * the request failed
-     * 
-     * @access public
-     * @return void
+     * the request failed.
      */
     public function isSuccessful()
-    { 
+    {
         if ($this['cod_erro'] == 0) {
             return true;
         }

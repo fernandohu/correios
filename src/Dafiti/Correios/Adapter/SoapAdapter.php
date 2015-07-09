@@ -6,13 +6,11 @@ use Dafiti\Correios\Entity;
 
 class SoapAdapter extends \SoapClient
 {
-
     /**
      * Soap adapter which will conect to SIGEP api
-     * using an configuration Object
+     * using an configuration Object.
      *
      * @var Dafiti\Correios\Entity\Config
-     * @access private
      */
     private $config;
 
@@ -22,8 +20,8 @@ class SoapAdapter extends \SoapClient
             'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,
-                'allow_self_signed' => true
-            ]
+                'allow_self_signed' => true,
+            ],
         ]);
 
         $this->setConfig($config);
@@ -43,11 +41,11 @@ class SoapAdapter extends \SoapClient
         $this->config = $config;
     }
 
-
     public function call($method, Entity\RequestObject $obj)
     {
-        try{
+        try {
             $response = $this->$method($obj->getArrayCopy());
+
             return new Entity\ResponseObject($response);
         } catch (\SoapFault $fault) {
             throw new \SoapFault(
@@ -55,7 +53,6 @@ class SoapAdapter extends \SoapClient
                 " faultstring: {$fault->faultstring})",
                 E_USER_ERROR
             );
-
         }
     }
 }

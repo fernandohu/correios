@@ -5,7 +5,6 @@ namespace Dafiti\Correios\Entity;
 use Dafiti\Correios\Exception;
 
 /**
- * @package Dafiti\Correios\Entity
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */
@@ -26,7 +25,6 @@ class Config extends \ArrayObject
             $this->setCodAdministrativo($data['codAdministrativo']);
             $this->setContrato($data['contrato']);
         }
-
     }
 
     public function setWsdl($wsdl)
@@ -81,7 +79,8 @@ class Config extends \ArrayObject
 
     /**
      * @param array $data
-     * @return boolean
+     *
+     * @return bool
      */
     public function isValid($data)
     {
