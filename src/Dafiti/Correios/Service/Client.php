@@ -73,6 +73,7 @@ class Client
             $servico,
             $quantidade
         ));
+
         return $this->getFacade()->call();
     }
 }

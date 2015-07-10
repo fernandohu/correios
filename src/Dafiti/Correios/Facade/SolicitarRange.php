@@ -19,8 +19,7 @@ use Dafiti\Correios\Entity;
  */
 class SolicitarRange extends FacadeInterface
 {
-
-    public function __construct($adapter, $tipo=null, $servico=null, $quantidade=1)
+    public function __construct($adapter, $tipo = null, $servico = null, $quantidade = 1)
     {
         $cfg = $adapter->getConfig();
         $request = new Entity\RequestObject([
