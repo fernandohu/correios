@@ -42,9 +42,8 @@ class Client
     {
         return $this->facade;
     }
-    
+
     public function solicitarRange()
     {
-
     }
 }
