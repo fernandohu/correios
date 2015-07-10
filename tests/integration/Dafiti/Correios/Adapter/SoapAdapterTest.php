@@ -22,6 +22,7 @@ class SoapAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $ini = parse_ini_file(ROOT."configs/config.ini", true);
         $this->config = new Entity\Config($ini['dev']);
+        $this->config->setLogPath(ROOT."logs/");
         $this->adapter = new SoapAdapter($this->config);
     }
 
@@ -49,7 +50,7 @@ class SoapAdapterTest extends \PHPUnit_Framework_TestCase
             'cepOrigem' => '70002900',
             'cepDestino' => '81350120',
             'usuario' => 'sigep',
-            'senha' => 'n5f9t8'
+            'senha' => 'n5f9t8',
         ]);
 
         $reponse = $this->adapter->call("verificaDisponibilidadeServico", $request);

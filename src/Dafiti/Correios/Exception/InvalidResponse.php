@@ -3,6 +3,7 @@
 namespace Dafiti\Correios\Exception;
 
 /**
+ * @package \Dafiti\Correios\Exception
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */

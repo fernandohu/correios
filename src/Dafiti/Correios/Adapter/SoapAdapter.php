@@ -4,6 +4,14 @@ namespace Dafiti\Correios\Adapter;
 
 use Dafiti\Correios\Entity;
 
+/**
+ * Connects to the SOAP API using default SoapClient PHP library.
+ * All requests and responses are logged if logPath config is specified.
+ * 
+ * @package \Dafiti\Correios\Adapter
+ * @author Flávio Briz <flavio.briz@dafiti.com.br> 
+ * @license MIT
+ */
 class SoapAdapter extends \SoapClient
 {
     /**
@@ -27,7 +35,10 @@ class SoapAdapter extends \SoapClient
         $this->setConfig($config);
         parent::__construct(
             $this->getConfig()->getWsdl(),
-            ['stream_context' => $context]
+            [
+                'stream_context' => $context,
+                'trace' => 1,
+            ]
         );
     }
 
@@ -53,6 +64,24 @@ class SoapAdapter extends \SoapClient
                 " faultstring: {$fault->faultstring})",
                 E_USER_ERROR
             );
+        } finally {
+            // log request and response
+            if (!empty($this->config->getLogPath())) {
+                try {
+                    $path = $this->config->getLogPath().date('Y-m-d')."/";
+                    !file_exists($path) && mkdir($path);
+                    $path .= (time()."_{$method}_");
+
+                    file_put_contents(
+                        $path."REQ.xml", $this->__getLastRequest()
+                    );
+                    file_put_contents(
+                        $path."RES.xml", $this->__getLastResponse()
+                    );
+                } catch (\Exception $e) {
+                    throw new \Exception("Unable to write log files.");
+                }
+            }
         }
     }
 }

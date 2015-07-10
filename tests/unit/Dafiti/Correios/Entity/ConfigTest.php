@@ -14,7 +14,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'usuario' => 'teste',
             'senha' => '123',
             'codAdministrativo' => '123',
-            'contrato' => '123'
+            'contrato' => '123',
+            'logPath' => '/tmp',
         ];
 
         $this->config = new Config($this->data);
@@ -32,6 +33,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('123', $this->config->getSenha());
         $this->assertEquals('123', $this->config->getCodAdministrativo());
         $this->assertEquals('123', $this->config->getContrato());
+        $this->assertEquals('/tmp', $this->config->getLogPath());
     }
 
 

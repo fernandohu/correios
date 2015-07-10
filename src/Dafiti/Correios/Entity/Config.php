@@ -5,6 +5,12 @@ namespace Dafiti\Correios\Entity;
 use Dafiti\Correios\Exception;
 
 /**
+ * Configuration file which should be populated with default 
+ * information for all requests.
+ *
+ * logPath is optional if request and response log is required.
+ *
+ * @package \Dafiti\Correios\Entity
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */
@@ -15,6 +21,7 @@ class Config extends \ArrayObject
     private $senha;
     private $codAdministrativo;
     private $contrato;
+    private $logPath;
 
     public function __construct(array $data)
     {
@@ -24,6 +31,10 @@ class Config extends \ArrayObject
             $this->setSenha($data['senha']);
             $this->setCodAdministrativo($data['codAdministrativo']);
             $this->setContrato($data['contrato']);
+
+            if (!empty($data['logPath'])) {
+                $this->setLogPath($data['logPath']);
+            }
         }
     }
 
@@ -75,6 +86,16 @@ class Config extends \ArrayObject
     public function getContrato()
     {
         return $this->contrato;
+    }
+
+    public function setLogPath($logPath)
+    {
+        $this->logPath = $logPath;
+    }
+
+    public function getLogPath()
+    {
+        return $this->logPath;
     }
 
     /**

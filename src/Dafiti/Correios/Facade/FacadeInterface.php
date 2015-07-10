@@ -5,6 +5,12 @@ namespace Dafiti\Correios\Facade;
 use Dafiti\Correios\Entity;
 use Dafiti\Correios\Adapter;
 
+/**
+ * @abstract
+ * @package \Dafiti\Correios\Facade
+ * @author Flávio Briz <flavio.briz@dafiti.com.br> 
+ * @license MIT
+ */
 abstract class FacadeInterface
 {
     protected $adapter;
