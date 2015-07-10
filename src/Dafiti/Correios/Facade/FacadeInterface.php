@@ -14,7 +14,13 @@ use Dafiti\Correios\Adapter;
 abstract class FacadeInterface
 {
     protected $adapter;
-    protected $response;
+    protected $request;
+
+    public function __construct(Adapter\SoapAdapter $adapter, Entity\RequestObject $request)
+    {
+        $this->setAdapter($adapter);
+        $this->setRequest($request);
+    }
 
     /**
      * @return \Dafiti\Correios\Entity\ResponseObject
@@ -26,8 +32,18 @@ abstract class FacadeInterface
         $this->adapter = $adapter;
     }
 
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
     public function setRequest(Entity\RequestObject $request)
     {
         $this->request = $request;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
     }
 }

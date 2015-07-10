@@ -12,16 +12,23 @@ use Dafiti\Correios\Exception;
  */
 class ResponseObject extends \ArrayObject
 {
+    public function __construct($data)
+    {
+        parent::__construct($data);
+        $this->isSuccessful();
+    }
+
     /**
      * Verifies error code and throws an exception in case
      * the request failed.
      */
     public function isSuccessful()
     {
-        if ($this['cod_erro'] == 0) {
+        $data = $this->getArrayCopy();
+        if (intval($data['cod_erro']) == 0) {
             return true;
         }
 
-        throw new Exception\InvalidResponse($this['cod_erro']);
+        throw new Exception\InvalidResponse($data['cod_erro'], $data['msg_erro']);
     }
 }

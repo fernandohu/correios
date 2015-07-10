@@ -55,8 +55,11 @@ class SoapAdapter extends \SoapClient
     {
         try {
             $response = $this->$method($obj->getArrayCopy());
+            $return = get_object_vars($response);
 
-            return new Entity\ResponseObject($response);
+            return new Entity\ResponseObject(
+                get_object_vars($return['return'])
+            );
         } catch (\SoapFault $fault) {
             throw new \SoapFault(
                 "SOAP Fault: (faultcode: {$fault->faultcode},".

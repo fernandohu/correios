@@ -4,6 +4,7 @@ namespace Dafiti\Correios\Service;
 
 use Dafiti\Correios\Facade;
 use Dafiti\Correios\Entity;
+use Dafiti\Correios\Adapter;
 
 /**
  * Calls API methods.
@@ -22,6 +23,17 @@ class Client
      * @var \Dafiti\Correios\Entity
      */
     private $config;
+
+    /**
+     * @var \Dafiti\Correios\Adapter\SoapAdapter
+     */
+    private $adapter;
+
+    public function __construct(Entity\Config $config)
+    {
+        $this->setConfig($config);
+        $this->setAdapter(new Adapter\SoapAdapter($this->getConfig()));
+    }
 
     public function getConfig()
     {
@@ -43,7 +55,24 @@ class Client
         return $this->facade;
     }
 
-    public function solicitarRange()
+    public function setAdapter(Adapter\SoapAdapter $adapter)
     {
+        $this->adapter = $adapter;
+    }
+
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+    public function solicitarRange($tipo, $servico, $quantidade)
+    {
+        $this->setFacade(new Facade\SolicitarRange(
+            $this->getAdapter(),
+            $tipo,
+            $servico,
+            $quantidade
+        ));
+        return $this->getFacade()->call();
     }
 }

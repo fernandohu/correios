@@ -126,7 +126,7 @@ class Config extends \ArrayObject
             $invalid[] = 'contrato';
         }
 
-        if (count($invalid)) {
+        if (!empty($invalid)) {
             throw new Exception\InvalidConfiguration($invalid);
         }
 
