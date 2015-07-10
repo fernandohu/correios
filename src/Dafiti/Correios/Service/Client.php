@@ -5,10 +5,9 @@ namespace Dafiti\Correios\Service;
 use Dafiti\Correios\Facade;
 
 /**
- * Calls API methods
- * 
- * @package \Dafiti\Correios\Service 
- * @author Flávio Briz <flavio.briz@dafiti.com.br> 
+ * Calls API methods.
+ *
+ * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */
 class Client

@@ -5,12 +5,11 @@ namespace Dafiti\Correios\Entity;
 use Dafiti\Correios\Exception;
 
 /**
- * Configuration file which should be populated with default 
+ * Configuration file which should be populated with default
  * information for all requests.
  *
  * logPath is optional if request and response log is required.
  *
- * @package \Dafiti\Correios\Entity
  * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */

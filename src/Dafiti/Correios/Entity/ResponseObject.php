@@ -5,10 +5,9 @@ namespace Dafiti\Correios\Entity;
 use Dafiti\Correios\Exception;
 
 /**
- * Default response object 
- * 
- * @package \Dafiti\Correios\Entity
- * @author Flávio Briz <flavio.briz@dafiti.com.br> 
+ * Default response object.
+ *
+ * @author Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */
 class ResponseObject extends \ArrayObject
