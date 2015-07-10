@@ -3,6 +3,7 @@
 namespace Dafiti\Correios\Service;
 
 use Dafiti\Correios\Facade;
+use Dafiti\Correios\Entity;
 
 /**
  * Calls API methods.
@@ -17,8 +18,19 @@ class Client
      */
     private $facade;
 
-    public function solicitarRange()
+    /**
+     * @var \Dafiti\Correios\Entity
+     */
+    private $config;
+
+    public function getConfig()
     {
+        return $this->config;
+    }
+
+    public function setConfig(Entity\Config $config)
+    {
+        $this->config = $config;
     }
 
     public function setFacade(Facade\FacadeInterface $facade)
@@ -29,5 +41,10 @@ class Client
     public function getFacade()
     {
         return $this->facade;
+    }
+    
+    public function solicitarRange()
+    {
+
     }
 }
