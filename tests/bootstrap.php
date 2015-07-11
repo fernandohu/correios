@@ -1,5 +1,7 @@
 <?php
 
-putenv('APP_ENV=dev');
+if (!file_exists($autoload = '../vendor/autoload.php')) {
+    throw new RuntimeException('Dependencies are not installed!');
+}
 
-require __DIR__ . '/../bootstrap.php';
+require $autoload;
