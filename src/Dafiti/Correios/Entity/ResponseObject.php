@@ -12,10 +12,16 @@ use Dafiti\Correios\Exception;
  */
 class ResponseObject extends \ArrayObject
 {
-    public function __construct($data)
+    private $exception;
+
+    public function __construct(\stdClass $data)
     {
-        parent::__construct($data);
-        $this->isSuccessful();
+        parent::__construct($this->objectToArray($data));
+    }
+
+    public function getException()
+    {
+        return $this->exception;
     }
 
     /**
@@ -25,10 +31,29 @@ class ResponseObject extends \ArrayObject
     public function isSuccessful()
     {
         $data = $this->getArrayCopy();
-        if (intval($data['cod_erro']) == 0) {
+        $return = $data['return'];
+
+        if (isset($return['cod_erro']) && intval($return['cod_erro']) == 0) {
             return true;
         }
 
-        throw new Exception\InvalidResponse($data['cod_erro'], $data['msg_erro']);
+        $this->exception = new Exception\InvalidResponse(
+            $return['cod_erro'], $return['msg_erro']
+        );
+
+        return false;
+    }
+
+    public function objectToArray(\stdClass $object)
+    {
+        $results = get_object_vars($object);
+
+        foreach ($results as $key => $val) {
+            if (is_object($val)) {
+                $results[$key] = $this->objectToArray($val);
+            }
+        }
+
+        return $results;
     }
 }

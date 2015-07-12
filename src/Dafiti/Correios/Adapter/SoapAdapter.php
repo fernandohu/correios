@@ -55,11 +55,6 @@ class SoapAdapter extends \SoapClient
     {
         try {
             $response = $this->$method($obj->getArrayCopy());
-            $return = get_object_vars($response);
-
-            return new Entity\ResponseObject(
-                get_object_vars($return['return'])
-            );
         } catch (\SoapFault $fault) {
             throw new \SoapFault(
                 "SOAP Fault: (faultcode: {$fault->faultcode},".
@@ -70,20 +65,30 @@ class SoapAdapter extends \SoapClient
             // log request and response
             if (!empty($this->config->getLogPath())) {
                 try {
-                    $path = $this->config->getLogPath().date('Y-m-d').'/';
-                    !file_exists($path) && mkdir($path);
+                    $path = $this->config->getLogPath();
                     $path .= (time()."_{$method}_");
 
-                    file_put_contents(
-                        $path.'REQ.xml', $this->__getLastRequest()
-                    );
-                    file_put_contents(
-                        $path.'RES.xml', $this->__getLastResponse()
-                    );
-                } catch (\Exception $e) {
-                    throw new \Exception('Unable to write log files.');
+                    $this->getLogFile($path.'REQ.xml')
+                        ->fwrite($this->__getLastRequest());
+
+                    $this->getLogFile($path.'RES.xml')
+                        ->fwrite($this->__getLastResponse());
+                } catch (\RuntimeException $e) {
+                    throw new \RuntimeException('Unable to write log files.');
                 }
             }
         }
+
+        return new Entity\ResponseObject($response);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return \SplFileObject
+     */
+    public function getLogFile($path)
+    {
+        return new \SplFileObject($path, 'w');
     }
 }

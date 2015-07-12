@@ -8,9 +8,16 @@ class ResponseObjectTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->resp = new ResponseObject([
-            'cod_erro' => 0
-        ]);
+        $data = (object) ['cod_erro'=>0];
+        $data = (object) ['return'=>$data];
+
+        $this->resp = new ResponseObject($data);
+    }
+
+    public function testObjectToarray()
+    {
+        $expected = ['return' => ['cod_erro'=>0]];
+        $this->assertEquals($expected, $this->resp->getArrayCopy());
     }
 
     public function testResponseIsSuccessful()
@@ -25,12 +32,14 @@ class ResponseObjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnsuccessfulResponse($cod)
     {
-        $this->resp = new ResponseObject([
-            'cod_erro' => $cod,
-            'msg_erro' => '',
-        ]);
+        $response = (object) ['cod_erro'=>$cod, 'msg_erro'=>''];
+        $response = (object) ['return'=>$response];
 
-        $this->resp->isSuccessful();
+        $this->resp = new ResponseObject($response);
+
+        if (!$this->resp->isSuccessful()) {
+            throw $this->resp->getException();
+        }
     }
 
     public function codErroProvider()

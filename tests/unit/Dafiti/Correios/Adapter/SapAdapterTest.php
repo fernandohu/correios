@@ -16,6 +16,7 @@ class SapAdapterTest extends \PHPUnit_Framework_TestCase
             ->setMethods([
                 '__getLastRequest',
                 '__getLastResponse',
+                'getLogFile',
                 'solicitarPostagemReversa'
             ])->getMock();
 
@@ -44,9 +45,7 @@ class SapAdapterTest extends \PHPUnit_Framework_TestCase
             ->method('solicitarPostagemReversa')
             ->will($this->returnValue($response));
 
-        $expected = new Entity\ResponseObject([
-            'cod_erro' => 0,
-        ]);
+        $expected = new Entity\ResponseObject($response);
 
         $result = $this->adapter->call(
             'solicitarPostagemReversa',
@@ -55,11 +54,42 @@ class SapAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected,$result);
     }
+    
+    public function testSuccessfulCallWithLogs()
+    {
+        $this->config->setLogPath("php://memory");
+
+        $response = (object) ['cod_erro'=>0];
+        $response = (object) ['return'=>$response];
+
+        $this->adapter->expects($this->once())
+            ->method('solicitarPostagemReversa')
+            ->will($this->returnValue($response));
+
+        $file = $this->getMock(
+            'SplFileObject',
+            ['fwrite'], 
+            ['php://memory']
+        );
+
+        $file->expects($this->atLeastOnce())
+            ->method('fwrite')
+            ->will($this->returnValue(1));
+
+        $this->adapter->expects($this->atLeastOnce())
+            ->method('getLogFile')
+            ->will($this->returnValue($file));
+
+        $this->adapter->call(
+            'solicitarPostagemReversa',
+            new Entity\RequestObject(['test'])
+        );
+    }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \RuntimeException
      */
-    public function testSuccessfulCallWithLogs()
+    public function testSuccessfulCallWithLogsFailure()
     {
         $this->config->setLogPath("/tmp");
 
@@ -70,16 +100,17 @@ class SapAdapterTest extends \PHPUnit_Framework_TestCase
             ->method('solicitarPostagemReversa')
             ->will($this->returnValue($response));
 
-        $expected = new Entity\ResponseObject([
-            'cod_erro' => 0,
-        ]);
+        $this->adapter->expects($this->once())
+            ->method('getLogFile')
+            ->will($this->throwException(
+                new \RuntimeException("Unable to write log files.")
+            )
+        );
 
-        $result = $this->adapter->call(
+        $this->adapter->call(
             'solicitarPostagemReversa',
             new Entity\RequestObject(['test'])
         );
-
-        $this->assertEquals($expected,$result);
     }
 
     /**
@@ -87,17 +118,12 @@ class SapAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnsuccessfulCall()
     {
-        $response = (object) ['cod_erro'=>0];
         $this->adapter->expects($this->any())
             ->method('solicitarPostagemReversa')
             ->will($this->throwException(new \SoapFault("test", "msg"))
             );
 
-        $expected = new Entity\ResponseObject([
-            'cod_erro' => 0,
-        ]);
-
-        $result = $this->adapter->call(
+        $this->adapter->call(
             'solicitarPostagemReversa',
             new Entity\RequestObject(['test'])
         );
