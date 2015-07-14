@@ -22,6 +22,14 @@ class Config extends \ArrayObject
     private $contrato;
     private $logPath;
 
+    private $mandatory = [
+        'wsdl',
+        'usuario',
+        'senha',
+        'codAdministrativo',
+        'contrato',
+    ];
+
     public function __construct(array $data)
     {
         if ($this->isValid($data)) {
@@ -106,24 +114,10 @@ class Config extends \ArrayObject
     {
         $invalid = [];
 
-        if (empty($data['wsdl'])) {
-            $invalid[] = 'wsdl';
-        }
-
-        if (empty($data['usuario'])) {
-            $invalid[] = 'usuario';
-        }
-
-        if (empty($data['senha'])) {
-            $invalid[] = 'senha';
-        }
-
-        if (empty($data['codAdministrativo'])) {
-            $invalid[] = 'codAdministrativo';
-        }
-
-        if (empty($data['contrato'])) {
-            $invalid[] = 'contrato';
+        foreach ($this->mandatory as $field) {
+            if (empty($data[$field])) { 
+                $invalid[] = $field;
+            }
         }
 
         if (!empty($invalid)) {

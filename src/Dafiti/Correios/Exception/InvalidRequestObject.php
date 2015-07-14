@@ -14,9 +14,9 @@ class InvalidRequestObject extends \Exception
      * @param object|null $object
      * @param string      $message
      */
-    public function __construct($field)
+    public function __construct($field, $msg = null)
     {
-        $message = 'InvalidRequestObject : '.$field.' is mandatory.';
+        $message = 'InvalidRequestObject : '.$field.' '.$msg;
         $message .= PHP_EOL.$this->getTraceAsString();
 
         parent::__construct($message);

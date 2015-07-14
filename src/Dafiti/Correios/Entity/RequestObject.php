@@ -5,15 +5,6 @@ namespace Dafiti\Correios\Entity;
 use Dafiti\Correios\Exception;
 
 /**
- * Request Object which should aways contain:.
- *
- * usuario
- * senha
- * codAdministrativo
- * contrato
- *
- * @version 0.1
- *
  * @author  Flávio Briz <flavio.briz@dafiti.com.br>
  * @license MIT
  */

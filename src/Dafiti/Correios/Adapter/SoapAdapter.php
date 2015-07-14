@@ -17,7 +17,7 @@ class SoapAdapter extends \SoapClient
      * Soap adapter which will conect to SIGEP api
      * using an configuration Object.
      *
-     * @var Dafiti\Correios\Entity\Config
+     * @var \Dafiti\Correios\Entity\Config
      */
     private $config;
 
