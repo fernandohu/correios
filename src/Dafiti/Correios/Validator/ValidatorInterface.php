@@ -8,8 +8,8 @@ abstract class ValidatorInterface
 
     public function __construct($options)
     {
-        $this->options = $options;   
+        $this->options = $options;
     }
 
-    abstract function validate($value);
+    abstract public function validate($value);
 }

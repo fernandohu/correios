@@ -10,6 +10,6 @@ class Boolean extends ValidatorInterface
             return true;
         }
 
-        return "Field is not a boolean.";
+        return 'Field is not a boolean.';
     }
 }

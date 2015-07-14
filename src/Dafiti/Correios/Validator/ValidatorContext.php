@@ -7,21 +7,18 @@ use Dafiti\Correios\Entity;
 class ValidatorContext
 {
     /**
-     * Array following the pattern
+     * Array following the pattern.
      *
-     * [['fieldNames'], 'validationRule', [$options]] 
-     * 
+     * [['fieldNames'], 'validationRule', [$options]]
+     *
      * @var array
-     * @access private
      */
     private $validationRules;
 
-
     /**
-     * Contains every error ocurred during validation
+     * Contains every error ocurred during validation.
      *
      * @var array
-     * @access private
      */
     private $errors;
 
@@ -33,18 +30,18 @@ class ValidatorContext
 
     /**
      * @param \Dafiti\Correios\Entity\RequestObject $request
-     * @access public
-     * @return boolean
+     *
+     * @return bool
      */
     public function validate(Entity\RequestObject $request)
     {
         $errors = false;
 
         foreach ($this->validationRules as $validationRule) {
-            list($fields,$rule,$options) = $validationRule;
+            list($fields, $rule, $options) = $validationRule;
 
             foreach ($fields as $field) {
-                $rule = '\\Dafiti\\Correios\\Validator\\' . $rule;
+                $rule = '\\Dafiti\\Correios\\Validator\\'.$rule;
                 $validator = new $rule($options);
                 $result = $validator->validate($request[$field]);
                 if ($result !== true) {
@@ -55,7 +52,7 @@ class ValidatorContext
         }
 
         return !$errors;
-    }   
+    }
 
     public function getErrors()
     {

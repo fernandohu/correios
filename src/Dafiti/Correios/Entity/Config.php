@@ -115,7 +115,7 @@ class Config extends \ArrayObject
         $invalid = [];
 
         foreach ($this->mandatory as $field) {
-            if (empty($data[$field])) { 
+            if (empty($data[$field])) {
                 $invalid[] = $field;
             }
         }

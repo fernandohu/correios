@@ -7,7 +7,7 @@ class String extends ValidatorInterface
     public function validate($value)
     {
         if (!is_string($value)) {
-            return "Is not a string.";
+            return 'Is not a string.';
         }
 
         if (isset($this->options['length']) && strlen($value) !== $this->options['length']) {

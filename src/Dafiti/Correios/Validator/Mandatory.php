@@ -10,6 +10,6 @@ class Mandatory extends ValidatorInterface
             return true;
         }
 
-        return "Field is mandatory.";
+        return 'Field is mandatory.';
     }
 }
