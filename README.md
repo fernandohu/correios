@@ -9,6 +9,14 @@
 
 PHP integration with Correios API
 
+Correios integration, using the following [implementation
+manual](http://www.corporativo.correios.com.br/encomendas/sigepweb/doc/Manual_de_Implementacao_do_Web_Service_SIGEPWEB_Logistica_Reversa.pdf).
+
+Methods implemeted until now are:
+
+* solicitarRange
+* solicitarPostagemReversa
+
 ## Instalation
 The package is available on [Packagist](http://packagist.org/packages/dafiti/correios).
 Autoloading is [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md) compatible.
