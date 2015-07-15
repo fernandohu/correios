@@ -15,31 +15,6 @@ class RequestObjectTest extends \PHPUnit_Framework_TestCase
         ];
 
         $requestObject = new RequestObject($data);
-        $this->assertTrue($requestObject->isValid());
-    }
-
-    /**
-     * @expectedException  \Dafiti\Correios\Exception\InvalidRequestObject
-     * @dataProvider invalidRequestProvider
-     */
-    public function testInvalidRequest(RequestObject $obj)
-    {
-        $obj->isValid();
-    }
-
-    public function invalidRequestProvider()
-    {
-        return [
-            [ new RequestObject([]) ],
-            [ new RequestObject(
-                ["usuario"=>"1"]
-            ) ],
-            [ new RequestObject(
-                ["usuario"=>"1", "senha" => "123" ]
-            )],
-            [ new RequestObject(
-                ["usuario"=>"1", "senha" => "123", "codAdministrativo" => "1" ]
-            )]
-        ];
+        $this->assertEquals($requestObject->getArrayCopy(), $data);
     }
 }

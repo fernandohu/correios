@@ -52,6 +52,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ->method('solicitarRange')
             ->will($this->returnValue($response));
 
-        $result = $this->client->solicitarRange('CA','','');
+        $this->client->solicitarRange('LR','',1);
+    }
+    
+    /**
+     * @expectedException \Dafiti\Correios\Exception\InvalidRequestObject
+     */
+    public function testSolicitarRangeInvalidRequest()
+    {
+        $response = (object) ['cod_erro'=>0];
+        $response = (object) ['return'=>$response];
+
+        $this->client->solicitarRange('CA','',1);
     }
 }

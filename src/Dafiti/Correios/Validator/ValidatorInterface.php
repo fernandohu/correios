@@ -6,7 +6,7 @@ abstract class ValidatorInterface
 {
     protected $options;
 
-    public function __construct($options)
+    public function __construct($options = null)
     {
         $this->options = $options;
     }

@@ -41,8 +41,9 @@ class ValidatorContext
             list($fields, $rule, $options) = $validationRule;
 
             foreach ($fields as $field) {
-                $rule = '\\Dafiti\\Correios\\Validator\\'.$rule;
-                $validator = new $rule($options);
+                $class = '\\Dafiti\\Correios\\Validator\\'.$rule;
+                $reflection = new \ReflectionClass($class);
+                $validator = $reflection->newInstance($options);
                 $result = $validator->validate($request[$field]);
                 if ($result !== true) {
                     $errors = true;

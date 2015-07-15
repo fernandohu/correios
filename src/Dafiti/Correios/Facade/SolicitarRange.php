@@ -19,6 +19,14 @@ use Dafiti\Correios\Entity;
  */
 class SolicitarRange extends FacadeInterface
 {
+    protected $rules = [
+        [
+            ['tipo'], 'Constant', ['values' => ['AP', 'LR', 'LE', 'LS', 'LV']],
+        ],[
+            ['usuario','senha','codAdministrativo','contrato','tipo','quantidade'], 'Mandatory', [],
+        ],
+    ];
+
     public function __construct($adapter, $tipo = null, $servico = null, $quantidade = 1)
     {
         $cfg = $adapter->getConfig();
@@ -31,6 +39,7 @@ class SolicitarRange extends FacadeInterface
             'servico' => $servico,
             'quantidade' => $quantidade,
         ]);
+
         parent::__construct($adapter, $request);
     }
 

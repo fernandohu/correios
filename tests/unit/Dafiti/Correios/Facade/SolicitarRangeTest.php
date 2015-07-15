@@ -43,7 +43,7 @@ class SolicitarRangeTest extends \PHPUnit_Framework_TestCase
         $response = (object) ['cod_erro'=>0];
         $response = (object) ['return'=>$response];
 
-        $facade = new SolicitarRange($this->adapter, 'CA', null, null);
+        $facade = new SolicitarRange($this->adapter, 'LR', null, 1);
         $expected = new Entity\ResponseObject($response);
         $response = $facade->call();
         $this->assertEquals($expected, $response);

@@ -25,7 +25,6 @@ class ResponseObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->resp->isSuccessful());
     }
 
-
     /**
      * @expectedException \Dafiti\Correios\Exception\InvalidResponse
      * @dataProvider codErroProvider
