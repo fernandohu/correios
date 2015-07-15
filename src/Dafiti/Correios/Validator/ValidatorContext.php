@@ -42,9 +42,17 @@ class ValidatorContext
 
             foreach ($fields as $field) {
                 $class = '\\Dafiti\\Correios\\Validator\\'.$rule;
+
                 $reflection = new \ReflectionClass($class);
                 $validator = $reflection->newInstance($options);
-                $result = $validator->validate($request[$field]);
+
+                $data = $request->getArrayCopy();
+                $fieldList = explode('.', $field);
+
+                $result = $validator->validate(
+                    $this->getValue($data, $fieldList)
+                );
+
                 if ($result !== true) {
                     $errors = true;
                     $this->errors[$field][] = $result;
@@ -58,5 +66,17 @@ class ValidatorContext
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function getValue(array $data, array $field)
+    {
+        if (count($field) == 1) {
+            return $data[$field[0]];
+        }
+
+        $data = $data[$field[0]];
+        array_shift($field);
+
+        return $this->getValue($data, $field);
     }
 }

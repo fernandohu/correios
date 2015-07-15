@@ -29,4 +29,14 @@ class ValidatorContextTest extends \PHPUnit_Framework_TestCase
             $context->getErrors()
         );
     }
+
+    public function testValidationRuleForDepthArrays()
+    {
+        $request = new Entity\RequestObject(["Test"=>["1"=>"teste"]]);
+        $context = new ValidatorContext([
+            [['Test.1'], 'Mandatory', null],
+        ]);
+
+        $this->assertTrue($context->validate($request));
+    }
 }
