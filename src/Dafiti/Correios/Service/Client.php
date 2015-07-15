@@ -76,4 +76,17 @@ class Client
 
         return $this->getFacade()->call();
     }
+
+    public function solicitarPostagemReversa($codServico, $cartao, array $destinatario, array $coletas_solicitadas)
+    {
+        $this->setFacade(new Facade\SolicitarPostagemReversa(
+            $this->getAdapter(),
+            $codServico,
+            $cartao,
+            $destinatario,
+            $coletas_solicitadas
+        ));
+
+        return $this->getFacade()->call();
+    }
 }
