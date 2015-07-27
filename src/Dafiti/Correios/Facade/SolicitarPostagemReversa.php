@@ -2,6 +2,8 @@
 
 namespace Dafiti\Correios\Facade;
 
+use Dafiti\Correios\Entity;
+
 /**
  * Este  método  processa o pedido  de  autorização  de  postagem  ou  coleta
  * de  forma online  nos  Correios. Poderá  ser  efetuado  até  50  solicitações
@@ -26,20 +28,14 @@ class SolicitarPostagemReversa extends FacadeInterface
                 'senha',
                 'codAdministrativo',
                 'contrato',
-                'codServico',
+                'codigo_servico',
                 'cartao',
                 'destinatario.nome',
                 'destinatario.logradouro',
                 'destinatario.numero',
-                'destinatario.complemento',
-                'destinatario.bairro',
-                'destinatario.referencia',
                 'destinatario.cidade',
                 'destinatario.uf',
-                'destinatario.cep',
-                'destinatario.ddd',
-                'destinatario.telefone',
-                'destinatario.email',
+                'destinatario.cep'
             ],'Mandatory',[],
         ],
     ];
@@ -52,7 +48,7 @@ class SolicitarPostagemReversa extends FacadeInterface
             'senha' => $cfg->getSenha(),
             'codAdministrativo' => $cfg->getCodAdministrativo(),
             'contrato' => $cfg->getContrato(),
-            'codServico' => $codServico,
+            'codigo_servico' => $codServico,
             'cartao' => $cartao,
             'destinatario' => $destinatario,
             'coletas_solicitadas' => $coletas_solicitadas,
