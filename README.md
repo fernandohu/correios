@@ -17,7 +17,7 @@ Methods implemeted until now are:
 * solicitarRange
 * solicitarPostagemReversa
 
-## Instalation
+## Installation
 The package is available on [Packagist](http://packagist.org/packages/dafiti/correios).
 Autoloading is [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md) compatible.
 
@@ -31,7 +31,7 @@ Autoloading is [PSR-4](https://github.com/php-fig/fig-standards/blob/master/acce
 
 
 ## Usage
-To use any method you need the following information first, which are required
+To use any method you need the following information first, required
 for most of the API calls:
 
 * usuario
@@ -39,7 +39,7 @@ for most of the API calls:
 * codAdministrativo
 * contrato
 
-To make an API call is quite simple, all you have to do use the client method
+It is quite simple to make an API call, all you have to do is use the client method
 with the default configuration file and the information needed to consume it:
 
 ```php
@@ -72,7 +72,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
 ```
 
-You can find example for all methods available inside the tests/integration
+You can find examples for all available methods inside the tests/integration
 folder.
 
 ## License
